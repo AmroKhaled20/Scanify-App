@@ -7,8 +7,10 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF2B475E),
-      body: Column(children: [CustomAppBar(title: 'Home')]),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        child: Column(children: [CustomAppBar(title: 'Home')]),
+      ),
     );
   }
 }

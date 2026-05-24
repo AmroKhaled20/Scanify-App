@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget {
             '$title',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
           ),
+          
         ],
       ),
     );
