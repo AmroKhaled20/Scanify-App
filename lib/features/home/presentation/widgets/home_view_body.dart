@@ -6,11 +6,6 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-        child: Column(children: [UpperSection()]),
-      ),
-    );
+    return Scaffold(body: Column(children: [UpperSection()]));
   }
 }
