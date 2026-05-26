@@ -1,4 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:scanify_pdf/core/utils/styles.dart';
+import 'package:scanify_pdf/core/widgets/custom_icon.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key, required this.title});
@@ -6,14 +9,16 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30,
+      height: 40,
+      width: double.infinity,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            '$title',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
-          ),
-          
+          Text(title, style: Styles.textStyle25),
+          const Spacer(),
+          CustomIcon(icon: FontAwesomeIcons.magnifyingGlass),
+          const SizedBox(width: 10),
+          CustomIcon(icon: FontAwesomeIcons.gear),
         ],
       ),
     );

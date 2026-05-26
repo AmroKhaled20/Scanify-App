@@ -14,7 +14,7 @@ class ScanifyPDF extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 22, 40),
+        scaffoldBackgroundColor: const Color(0xFF0D1019),
         textTheme: GoogleFonts.montserratTextTheme(ThemeData.dark().textTheme),
       ),
       routerConfig: AppRouter.router,
