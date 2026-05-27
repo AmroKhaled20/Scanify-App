@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scanify_pdf/core/services/permission_service.dart';
 import 'package:scanify_pdf/features/home/presentation/widgets/home_view_body.dart';
+import 'package:scanify_pdf/features/scanner/presentation/manager/camera_permission_cubit/camera_permission_cubit.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const HomeViewBody(),
+    return BlocProvider(
+      create: (context) => CameraPermissionCubit(PermissionService()),
+      child: const Scaffold(body: HomeViewBody()),
     );
   }
 }
