@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scanify_pdf/constants.dart';
+import 'package:scanify_pdf/core/utils/constants.dart';
 
 class CustomIcon extends StatelessWidget {
   const CustomIcon({

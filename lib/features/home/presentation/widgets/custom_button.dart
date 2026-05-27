@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:scanify_pdf/constants.dart';
+import 'package:scanify_pdf/core/utils/constants.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
