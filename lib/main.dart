@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scanify_pdf/core/utils/app_router.dart';
+import 'package:scanify_pdf/core/utils/service_locator.dart';
 
 void main() {
+  setupServiceLocator();
   runApp(const ScanifyPDF());
 }
 
