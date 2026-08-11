@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scanify_pdf/core/utils/constants.dart';
-import 'package:scanify_pdf/features/home/presentation/widgets/bottom_bar.dart';
-import 'package:scanify_pdf/features/home/presentation/widgets/lower_section.dart';
-import 'package:scanify_pdf/features/home/presentation/widgets/upper_section.dart';
+import 'package:scanify_pdf/features/home/presentation/views/widgets/bottom_bar.dart';
+import 'package:scanify_pdf/features/home/presentation/views/widgets/lower_section.dart';
+import 'package:scanify_pdf/features/home/presentation/views/widgets/upper_section.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});

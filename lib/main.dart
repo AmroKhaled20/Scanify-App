@@ -4,6 +4,7 @@ import 'package:scanify_pdf/core/utils/app_router.dart';
 import 'package:scanify_pdf/core/utils/service_locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
   runApp(const ScanifyPDF());
 }
