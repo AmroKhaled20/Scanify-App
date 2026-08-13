@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
+import 'package:scanify_pdf/features/home/presentation/manager/home%20cubit/home_cubit.dart';
 
 class LowerSection extends StatelessWidget {
   const LowerSection({super.key});
@@ -29,6 +31,47 @@ class LowerSection extends StatelessWidget {
             Text(
               'All Files',
               style: Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: AppSpacing.s16),
+
+            Expanded(
+              child: BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is HomeFailure) {
+                    return Center(
+                      child: Text(
+                        state.errorMessage,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    );
+                  } else if (state is HomeSuccess) {
+                    if (state.files.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          'No Files Added',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      itemCount: state.files.length,
+                      itemBuilder: (context, index) {
+                        final file = state.files[index];
+                        // مؤقتاً نعرض اسم الملف
+                        return ListTile(
+                          title: Text(
+                            file.name,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return const SizedBox();
+                },
+              ),
             ),
           ],
         ),
