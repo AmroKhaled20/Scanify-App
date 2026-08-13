@@ -12,8 +12,7 @@ import 'package:scanify_pdf/features/home/domain/entities/pdf_file_entity.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(PdfFileEntityAdapter());
-  await Hive.openBox<PdfFileEntity>(kPdfFilesBox);
+  await Hive.openBox<Map>(kPdfFilesBox);
   setupServiceLocator();
   Bloc.observer = SimpleBlocObserver();
   runApp(const ScanifyPDF());
