@@ -4,6 +4,7 @@ import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 import 'package:scanify_pdf/features/home/presentation/manager/home%20cubit/home_cubit.dart';
+import 'package:scanify_pdf/features/home/presentation/views/widgets/pdf_item_widget.dart';
 
 class LowerSection extends StatelessWidget {
   const LowerSection({super.key});
@@ -32,7 +33,7 @@ class LowerSection extends StatelessWidget {
               'All Files',
               style: Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: AppSpacing.s16),
+            const SizedBox(height: AppSpacing.s8),
 
             Expanded(
               child: BlocBuilder<HomeCubit, HomeState>(
@@ -47,6 +48,8 @@ class LowerSection extends StatelessWidget {
                       ),
                     );
                   } else if (state is HomeSuccess) {
+                    // 🔴 وقفنا الشرط ده مؤقتاً عشان نجرب شكل الـ UI بدل ما يجيب شاشة فاضية
+                    /*
                     if (state.files.isEmpty) {
                       return const Center(
                         child: Text(
@@ -55,17 +58,15 @@ class LowerSection extends StatelessWidget {
                         ),
                       );
                     }
+                    */
+
                     return ListView.builder(
-                      itemCount: state.files.length,
+                      itemCount: 3, // 🔴 خلينا العدد 3 مؤقتاً للتجربة
                       itemBuilder: (context, index) {
-                        final file = state.files[index];
-                        // مؤقتاً نعرض اسم الملف
-                        return ListTile(
-                          title: Text(
-                            file.name,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        );
+                        // لما نربط الداتا الحقيقية هنشغل السطر ده ونباصي المتغير للكارت
+                        // final file = state.files[index];
+
+                        return const PdfItemWidget();
                       },
                     );
                   }
