@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:scanify_pdf/core/entities/pdf_file_entity.dart';
 import 'package:scanify_pdf/core/errors/failure.dart';
 import 'package:scanify_pdf/core/use_cases/no_param_use_case.dart';
-import 'package:scanify_pdf/features/home/domain/entities/pdf_file_entity.dart';
 import 'package:scanify_pdf/features/home/domain/repos/home_repo.dart';
 
 class GetSavedFilesUseCase extends UseCase<List<PdfFileEntity>> {

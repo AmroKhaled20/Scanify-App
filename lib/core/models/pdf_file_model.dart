@@ -1,4 +1,4 @@
-import 'package:scanify_pdf/features/home/domain/entities/pdf_file_entity.dart';
+import 'package:scanify_pdf/core/entities/pdf_file_entity.dart';
 
 class PdfFileModel extends PdfFileEntity {
   PdfFileModel({
@@ -20,7 +20,7 @@ class PdfFileModel extends PdfFileEntity {
       createdAt: DateTime.parse(map['createdAt']),
     );
   }
-  //
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scanify_pdf/core/utils/app_router.dart';
 import 'package:scanify_pdf/features/home/presentation/views/widgets/custom_button.dart';
-import 'package:scanify_pdf/features/scanner/presentation/manager/camera_permission_cubit/camera_permission_cubit.dart';
+import 'package:scanify_pdf/features/scanner/presentation/manager/camera%20permission%20cubit/camera_permission_cubit.dart';
 
 class CustomRowButtons extends StatelessWidget {
   const CustomRowButtons({super.key});
@@ -26,7 +26,6 @@ class CustomRowButtons extends StatelessWidget {
           BlocListener<CameraPermissionCubit, CameraPermissionState>(
             listener: (context, state) {
               if (state is CameraPermissionGranted) {
-                // // لو أخد الصلاحية، يروح لشاشة الكاميرا
                 GoRouter.of(context).push(AppRouter.kCameraView);
               } else if (state is CameraPermissionDenied) {
                 ScaffoldMessenger.of(context).showSnackBar(

@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:scanify_pdf/core/models/pdf_file_model.dart';
 import 'package:scanify_pdf/core/utils/constants.dart';
-import 'package:scanify_pdf/features/home/data/models/pdf_file_model.dart';
 
 abstract class HomeLocalDataSource {
   List<PdfFileModel> fetchSavedFiles();

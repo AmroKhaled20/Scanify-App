@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
-// import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 
@@ -10,21 +9,15 @@ class PdfItemWidget extends StatelessWidget {
   // @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: AppSpacing.s8,
-      ), // مسافة بين كل كارت والتاني
+      margin: const EdgeInsets.only(bottom: AppSpacing.s8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ==========================================
-          // 1. صورة الملف (Responsive Width)
-          // ==========================================
           SizedBox(
-            width: context.w * 0.23, // بياخد 22% من عرض الشاشة أياً كان حجمها
+            width: context.w * 0.23,
             height: context.w * 0.23,
             child: Stack(
               children: [
-                // الخلفية البيضاء للورقة
                 Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -32,9 +25,7 @@ class PdfItemWidget extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  // مؤقتاً فاضية لحد ما نجيب الصورة الحقيقية للـ Scan
                 ),
-                // علامة الـ PDF (Badge)
                 Positioned(
                   top: 0,
                   right: 0,
@@ -44,7 +35,7 @@ class PdfItemWidget extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF9E9E9E), // لون رصاصي زي الصورة
+                      color: Color(0xFF9E9E9E),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12),
                         bottomLeft: Radius.circular(8),
@@ -65,34 +56,27 @@ class PdfItemWidget extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.s16),
 
-          // ==========================================
-          // 2. تفاصيل الملف (Expanded لمنع أي Overflow)
-          // ==========================================
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // اسم الملف
                 Text(
-                  'مرفقات', // داتا وهمية مؤقتاً
+                  'مرفقات',
                   style: Styles.textStyle18.copyWith(color: Colors.white),
-                  maxLines: 1, // مهم جداً عشان لو الاسم طويل
-                  overflow:
-                      TextOverflow.ellipsis, // بيحط ... في آخر الكلام الطويل
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: AppSpacing.s8),
 
-                // صف البيانات (عدد الصفحات، التاريخ، المساحة)
                 Row(
                   children: [
-                    // مربع عدد الصفحات
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4A4E69), // اللون الكحلي الفاتح
+                        color: const Color(0xFF4A4E69),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: const Text(
@@ -102,14 +86,12 @@ class PdfItemWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.s8),
 
-                    // التاريخ
                     Text(
                       '06/25 03:35',
                       style: Styles.textStyle14.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(width: AppSpacing.s16),
 
-                    // المساحة (استخدمنا Expanded هنا كزيادة أمان للشاشات الصغيرة جداً)
                     Expanded(
                       child: Text(
                         '381 kB',
@@ -121,7 +103,6 @@ class PdfItemWidget extends StatelessWidget {
                   ],
                 ),
 
-                // زراير المشاركة والإعدادات (متحاذية لليمين)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
