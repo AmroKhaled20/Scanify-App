@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
               HomeCubit(getIt.get<GetSavedFilesUseCase>())..fetchSavedFiles(),
         ),
       ],
-      child: const Scaffold(body: HomeViewBody()),
+      child: const HomeViewBody(),
     );
   }
 }
