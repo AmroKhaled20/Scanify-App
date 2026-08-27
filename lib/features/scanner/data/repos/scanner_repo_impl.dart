@@ -20,7 +20,6 @@ class ScannerRepoImpl implements ScannerRepo {
   }) async {
     try {
       final pdf = pw.Document();
-      // 2. المرور على الصور وإضافتها كصفحات
       for (var image in images) {
         final imageBytes = await File(image.imagePath).readAsBytes();
         final pdfImage = pw.MemoryImage(imageBytes);

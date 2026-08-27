@@ -11,6 +11,10 @@ class ClearCachedImagesUseCase extends UseCase<void, ClearCacheParams> {
 
   @override
   Future<Either<Failure, void>> call(ClearCacheParams param) async {
+    if (param.images.isEmpty) {
+      return const Right(null);
+    }
+
     return await scannerRepo.clearCachedImages(images: param.images);
   }
 }
