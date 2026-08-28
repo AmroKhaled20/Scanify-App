@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:scanify_pdf/core/utils/app_router.dart';
 import 'package:scanify_pdf/features/scanner/presentation/manager/scanner cubit/scanner_cubit.dart';
 
 class ScannerControlsWidget extends StatelessWidget {
@@ -35,7 +37,14 @@ class ScannerControlsWidget extends StatelessWidget {
                 }
 
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    if (count > 0) {
+                      GoRouter.of(context).push(
+                        AppRouter.kCapturedImagesView,
+                        extra: context.read<ScannerCubit>(),
+                      );
+                    }
+                  },
                   child: Container(
                     width: 60,
                     height: 60,
