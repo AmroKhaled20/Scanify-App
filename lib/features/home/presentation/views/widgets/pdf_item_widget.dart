@@ -1,12 +1,16 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:scanify_pdf/core/entities/pdf_file_entity.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 
 class PdfItemWidget extends StatelessWidget {
-  const PdfItemWidget({super.key});
+  final PdfFileEntity pdfFile;
 
-  // @override
+  const PdfItemWidget({super.key, required this.pdfFile});
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.s8),
@@ -24,6 +28,12 @@ class PdfItemWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
+                    image: pdfFile.thumbnailPath != null
+                        ? DecorationImage(
+                            image: FileImage(File(pdfFile.thumbnailPath!)),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
                 ),
                 Positioned(
@@ -61,7 +71,7 @@ class PdfItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'مرفقات',
+                  pdfFile.name,
                   style: Styles.textStyle18.copyWith(color: Colors.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -79,22 +89,22 @@ class PdfItemWidget extends StatelessWidget {
                         color: const Color(0xFF4A4E69),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Text(
-                        '3',
+                      child: Text(
+                        pdfFile.numOfPages.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.s8),
 
                     Text(
-                      '06/25 03:35',
+                      pdfFile.createdAt.toString().split(' ')[0],
                       style: Styles.textStyle14.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(width: AppSpacing.s16),
 
                     Expanded(
                       child: Text(
-                        '381 kB',
+                        pdfFile.size,
                         style: Styles.textStyle14.copyWith(color: Colors.grey),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

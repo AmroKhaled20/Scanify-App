@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
-import 'package:scanify_pdf/features/home/presentation/manager/home%20cubit/home_cubit.dart';
+import 'package:scanify_pdf/features/home/presentation/manager/home cubit/home_cubit.dart';
 import 'package:scanify_pdf/features/home/presentation/views/widgets/pdf_item_widget.dart';
 
 class LowerSection extends StatelessWidget {
@@ -34,7 +34,6 @@ class LowerSection extends StatelessWidget {
               style: Styles.textStyle20.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppSpacing.s8),
-
             Expanded(
               child: BlocBuilder<HomeCubit, HomeState>(
                 builder: (context, state) {
@@ -48,28 +47,25 @@ class LowerSection extends StatelessWidget {
                       ),
                     );
                   } else if (state is HomeSuccess) {
-                    // 🔴 وقفنا الشرط ده مؤقتاً عشان نجرب شكل الـ UI بدل ما يجيب شاشة فاضية
-                    /*
                     if (state.files.isEmpty) {
                       return const Center(
                         child: Text(
-                          'No Files Added',
-                          style: TextStyle(color: Colors.grey),
+                          'No Files Added Yet',
+                          style: TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                       );
                     }
-                    */
 
                     return ListView.builder(
-                      itemCount: 3, // 🔴 خلينا العدد 3 مؤقتاً للتجربة
+                      itemCount: state.files.length,
                       itemBuilder: (context, index) {
-                        // لما نربط الداتا الحقيقية هنشغل السطر ده ونباصي المتغير للكارت
-                        // final file = state.files[index];
+                        final file = state.files[index];
 
-                        return const PdfItemWidget();
+                        return PdfItemWidget(pdfFile: file);
                       },
                     );
                   }
+
                   return const SizedBox();
                 },
               ),

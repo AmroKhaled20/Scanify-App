@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/constants.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
+import 'package:scanify_pdf/features/scanner/presentation/manager/scanner%20cubit/scanner_cubit.dart';
+import 'package:scanify_pdf/features/scanner/presentation/views/widgets/save_pdf_bottom_sheet.dart';
 
 class CapturedImagesLowerSection extends StatelessWidget {
   const CapturedImagesLowerSection({super.key});
@@ -24,7 +27,19 @@ class CapturedImagesLowerSection extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          // هنا هستدعي الـ Bottom Sheet بتاع تسمية الملف
+          final scannerCubit = context.read<ScannerCubit>();
+
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (context) {
+              return BlocProvider.value(
+                value: scannerCubit,
+                child: const SavePdfBottomSheet(),
+              );
+            },
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,

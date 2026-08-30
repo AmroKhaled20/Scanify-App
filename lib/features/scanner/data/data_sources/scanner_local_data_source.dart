@@ -9,8 +9,8 @@ abstract class ScannerLocalDataSource {
 class ScannerLocalDataSourceImpl implements ScannerLocalDataSource {
   @override
   Future<void> savePdfMetadata(PdfFileModel pdfFile) async {
-    var box = Hive.box<PdfFileModel>(kPdfFilesBox);
+    var box = Hive.box(kPdfFilesBox);
 
-    await box.put(pdfFile.id, pdfFile);
+    await box.put(pdfFile.id, pdfFile.toMap());
   }
 }
