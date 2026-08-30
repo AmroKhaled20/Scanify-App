@@ -4,6 +4,7 @@ import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 import 'package:scanify_pdf/features/home/presentation/manager/home cubit/home_cubit.dart';
+import 'package:scanify_pdf/features/home/presentation/views/pdf_viewer_view.dart';
 import 'package:scanify_pdf/features/home/presentation/views/widgets/pdf_item_widget.dart';
 
 class LowerSection extends StatelessWidget {
@@ -61,7 +62,30 @@ class LowerSection extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final file = state.files[index];
 
-                        return PdfItemWidget(pdfFile: file);
+                        return GestureDetector(
+                          onTap: () {
+                            if (file.pdfPath.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PdfViewerView(
+                                    filePath: file.pdfPath,
+                                    fileName: file.name,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'PDF file path is not available',
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          child: PdfItemWidget(pdfFile: file),
+                        );
                       },
                     );
                   }

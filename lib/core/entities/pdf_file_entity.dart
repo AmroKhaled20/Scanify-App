@@ -5,6 +5,7 @@ class PdfFileEntity {
   final String thumbnailPath;
   final String size;
   final DateTime createdAt;
+  final String pdfPath;
 
   PdfFileEntity({
     required this.id,
@@ -13,5 +14,6 @@ class PdfFileEntity {
     required this.thumbnailPath,
     required this.size,
     required this.createdAt,
+    required this.pdfPath,
   });
 }

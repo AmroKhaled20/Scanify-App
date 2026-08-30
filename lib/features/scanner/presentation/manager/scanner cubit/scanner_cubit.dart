@@ -59,6 +59,8 @@ class ScannerCubit extends Cubit<ScannerState> {
       ClearCacheParams(images: capturedImages),
     );
     capturedImages.clear();
-    emit(ScannerInitial());
+    if (!isClosed) {
+      emit(ScannerInitial());
+    }
   }
 }

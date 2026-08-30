@@ -8,6 +8,7 @@ class PdfFileModel extends PdfFileEntity {
     required super.thumbnailPath,
     required super.size,
     required super.createdAt,
+    required super.pdfPath,
   });
 
   factory PdfFileModel.fromMap(Map<String, dynamic> map) {
@@ -18,6 +19,7 @@ class PdfFileModel extends PdfFileEntity {
       thumbnailPath: map['thumbnailPath'],
       size: map['size'],
       createdAt: DateTime.parse(map['createdAt']),
+      pdfPath: map['pdfPath'] ?? '',
     );
   }
 
@@ -29,6 +31,7 @@ class PdfFileModel extends PdfFileEntity {
       'thumbnailPath': thumbnailPath,
       'size': size,
       'createdAt': createdAt.toIso8601String(),
+      'pdfPath': pdfPath,
     };
   }
 }

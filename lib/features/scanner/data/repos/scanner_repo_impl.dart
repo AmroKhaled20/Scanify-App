@@ -55,6 +55,7 @@ class ScannerRepoImpl implements ScannerRepo {
         thumbnailPath: savedThumbnailPath,
         size: (fileSizeInBytes / 1024).toStringAsFixed(2) + ' KB',
         createdAt: DateTime.now(),
+        pdfPath: filePath,
       );
       await localDataSource.savePdfMetadata(pdfModel);
       return const Right(null);
