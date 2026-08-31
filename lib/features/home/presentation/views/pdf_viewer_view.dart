@@ -48,12 +48,11 @@ class _PdfViewerViewState extends State<PdfViewerView> {
             filePath: widget.filePath,
             enableSwipe: true,
             swipeHorizontal: false,
-            autoSpacing: true,
+            autoSpacing: false,
             pageFling: false,
             pageSnap: false,
-            showScrollIndicators: true,
+            showScrollIndicators: false,
             fitPolicy: FitPolicy.WIDTH,
-            backgroundColor: const Color(0xFF12131C),
             defaultPage: 0,
             onRender: (pages) {
               if (!mounted) return;
@@ -98,25 +97,26 @@ class _PdfViewerViewState extends State<PdfViewerView> {
           if (isReady && totalPages > 0)
             Positioned(
               top: 16,
-              left: 0,
               right: 0,
-              child: Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 7,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 7,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.65),
+
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    bottomLeft: Radius.circular(16),
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.65),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    'Page ${currentPage + 1} of $totalPages',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                child: Text(
+                  '${currentPage + 1} / $totalPages',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
