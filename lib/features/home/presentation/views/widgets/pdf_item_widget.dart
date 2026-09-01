@@ -4,6 +4,7 @@ import 'package:scanify_pdf/core/entities/pdf_file_entity.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PdfItemWidget extends StatelessWidget {
   final PdfFileEntity pdfFile;
@@ -117,7 +118,13 @@ class PdfItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final file = XFile(pdfFile.pdfPath);
+
+                        await SharePlus.instance.share(
+                          ShareParams(files: [file]),
+                        );
+                      },
                       icon: const Icon(
                         Icons.share,
                         color: Colors.grey,
