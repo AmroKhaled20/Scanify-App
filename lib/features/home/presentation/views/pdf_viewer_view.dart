@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PdfViewerView extends StatefulWidget {
   final String filePath;
@@ -26,6 +27,22 @@ class _PdfViewerViewState extends State<PdfViewerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF12131C),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xFF202334),
+      //   elevation: 0,
+      //   centerTitle: true,
+      //   iconTheme: const IconThemeData(color: Colors.white),
+      //   title: Text(
+      //     widget.fileName,
+      //     maxLines: 1,
+      //     overflow: TextOverflow.ellipsis,
+      //     style: Styles.titleMeduim.copyWith(color: Colors.white),
+      //   ),
+      //   bottom: PreferredSize(
+      //     preferredSize: const Size.fromHeight(1),
+      //     child: Container(height: 1, color: Colors.white.withOpacity(0.08)),
+      //   ),
+      // ),
       appBar: AppBar(
         backgroundColor: const Color(0xFF202334),
         elevation: 0,
@@ -37,6 +54,16 @@ class _PdfViewerViewState extends State<PdfViewerView> {
           overflow: TextOverflow.ellipsis,
           style: Styles.titleMeduim.copyWith(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_rounded, color: Colors.white),
+            onPressed: () async {
+              final file = XFile(widget.filePath);
+
+              await SharePlus.instance.share(ShareParams(files: [file]));
+            },
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(height: 1, color: Colors.white.withOpacity(0.08)),
