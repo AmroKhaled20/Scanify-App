@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:scanify_pdf/core/utils/app_router.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/constants.dart';
+import 'package:scanify_pdf/core/utils/custom_snackbar.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 import 'package:scanify_pdf/features/home/presentation/manager/home cubit/home_cubit.dart';
 import 'package:scanify_pdf/features/scanner/presentation/manager/scanner cubit/scanner_cubit.dart';
@@ -41,23 +42,15 @@ class _SavePdfBottomSheetState extends State<SavePdfBottomSheet> {
     return BlocConsumer<ScannerCubit, ScannerState>(
       listener: (context, state) {
         if (state is ScannerPdfGenerationSuccess) {
-          GoRouter.of(context).pop();
+          final router = GoRouter.of(context);
 
           context.read<ScannerCubit>().clearSession();
-
           context.read<HomeCubit>().fetchSavedFiles();
 
-          GoRouter.of(context).go(AppRouter.kHomeView);
+          router.pop();
+          router.go(AppRouter.kHomeView);
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'PDF saved successfully!',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.green,
-            ),
-          );
+          CustomSnackbar.showSuccess(context, 'Converted to PDF successfully!');
         } else if (state is ScannerPdfGenerationError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
