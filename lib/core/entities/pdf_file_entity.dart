@@ -2,7 +2,7 @@ class PdfFileEntity {
   final String id;
   final String name;
   final int numOfPages;
-  final String thumbnailPath;
+  final String? thumbnailPath;
   final String size;
   final DateTime createdAt;
   final String pdfPath;

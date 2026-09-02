@@ -27,22 +27,6 @@ class _PdfViewerViewState extends State<PdfViewerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF12131C),
-      // appBar: AppBar(
-      //   backgroundColor: const Color(0xFF202334),
-      //   elevation: 0,
-      //   centerTitle: true,
-      //   iconTheme: const IconThemeData(color: Colors.white),
-      //   title: Text(
-      //     widget.fileName,
-      //     maxLines: 1,
-      //     overflow: TextOverflow.ellipsis,
-      //     style: Styles.titleMeduim.copyWith(color: Colors.white),
-      //   ),
-      //   bottom: PreferredSize(
-      //     preferredSize: const Size.fromHeight(1),
-      //     child: Container(height: 1, color: Colors.white.withOpacity(0.08)),
-      //   ),
-      // ),
       appBar: AppBar(
         backgroundColor: const Color(0xFF202334),
         elevation: 0,
