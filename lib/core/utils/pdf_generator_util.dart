@@ -38,24 +38,43 @@ class PdfGeneratorUtil {
       await appPdfDir.create(recursive: true);
     }
 
-    final filePath = '${appPdfDir.path}/$pdfName.pdf';
+    final filePath = await _getUniqueFilePath(appPdfDir.path, pdfName);
     final file = File(filePath);
     await file.writeAsBytes(await pdf.save());
 
+    final finalPdfName = filePath.split('/').last.replaceAll('.pdf', '');
+
     final thumbnailFile = File(imagePaths.first);
-    final savedThumbnailPath = '${appPdfDir.path}/$pdfName-thumb.jpg';
+    final savedThumbnailPath = '${appPdfDir.path}/$finalPdfName-thumb.jpg';
     await thumbnailFile.copy(savedThumbnailPath);
 
     final fileSizeInBytes = await file.length();
 
     return PdfFileModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      name: pdfName,
+      name: finalPdfName,
       numOfPages: imagePaths.length,
       thumbnailPath: savedThumbnailPath,
       size: '${(fileSizeInBytes / 1024).toStringAsFixed(2)} KB',
       createdAt: DateTime.now(),
       pdfPath: filePath,
     );
+  }
+
+  static Future<String> _getUniqueFilePath(
+    String dirPath,
+    String baseName,
+  ) async {
+    String filePath = '$dirPath/$baseName.pdf';
+    File file = File(filePath);
+    int counter = 1;
+
+    while (await file.exists()) {
+      filePath = '$dirPath/$baseName ($counter).pdf';
+      file = File(filePath);
+      counter++;
+    }
+
+    return filePath;
   }
 }

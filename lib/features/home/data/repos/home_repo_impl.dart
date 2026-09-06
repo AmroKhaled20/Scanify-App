@@ -13,9 +13,9 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, List<PdfFileEntity>>> getSavedFiles() async {
     try {
       final files = homeLocalDataSource.fetchSavedFiles();
-      return right(files);
+      return Right(files);
     } catch (e) {
-      return left(LocalDatabaseFailure(e.toString()));
+      return Left(LocalDatabaseFailure('Failed to load your saved files.'));
     }
   }
 }

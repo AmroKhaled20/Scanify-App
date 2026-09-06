@@ -17,6 +17,10 @@ class ScannerRepoImpl implements ScannerRepo {
     required String pdfName,
   }) async {
     try {
+      if (images.isEmpty) {
+        return Left(EmptyImagesFailure());
+      }
+
       final imagePaths = images.map((e) => e.imagePath).toList();
 
       final pdfModel = await PdfGeneratorUtil.generate(
@@ -28,7 +32,18 @@ class ScannerRepoImpl implements ScannerRepo {
 
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      final errorString = e.toString().toLowerCase();
+      if (e is PathNotFoundException || errorString.contains('no such file')) {
+        return Left(ImageNotFoundFailure());
+      } else if (e is FileSystemException) {
+        return Left(
+          FileSystemFailure('Storage error. Please check your space.'),
+        );
+      } else if (errorString.contains('hive') || errorString.contains('box')) {
+        return Left(LocalDatabaseFailure('Failed to save file data.'));
+      } else {
+        return Left(PdfGenerationFailure('Failed to create PDF.'));
+      }
     }
   }
 
@@ -45,7 +60,10 @@ class ScannerRepoImpl implements ScannerRepo {
       }
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      if (e is FileSystemException) {
+        return Left(FileSystemFailure('Failed to clear some cached images.'));
+      }
+      return Left(UnknownFailure('Something went wrong. Try again.'));
     }
   }
 }

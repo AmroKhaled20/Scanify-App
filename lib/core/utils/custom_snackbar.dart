@@ -5,8 +5,33 @@ import 'package:scanify_pdf/core/utils/styles.dart';
 
 class CustomSnackbar {
   static void showSuccess(BuildContext context, String message) {
-    final overlayState = Overlay.of(context);
+    _showOverlay(
+      context: context,
+      message: message,
+      iconData: Icons.check,
+      iconColor: primaryColor,
+      durationInSeconds: 3,
+    );
+  }
 
+  static void showError(BuildContext context, String message) {
+    _showOverlay(
+      context: context,
+      message: message,
+      iconData: Icons.priority_high_rounded,
+      iconColor: const Color(0xFFE63946),
+      durationInSeconds: 4,
+    );
+  }
+
+  static void _showOverlay({
+    required BuildContext context,
+    required String message,
+    required IconData iconData,
+    required Color iconColor,
+    required int durationInSeconds,
+  }) {
+    final overlayState = Overlay.of(context);
     late OverlayEntry overlayEntry;
 
     overlayEntry = OverlayEntry(
@@ -48,20 +73,16 @@ class CustomSnackbar {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: iconColor,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: primaryColor.withOpacity(0.25),
+                          color: iconColor.withOpacity(0.25),
                           blurRadius: 10,
                         ),
                       ],
                     ),
-                    child: const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                      size: 28,
-                    ),
+                    child: Icon(iconData, color: Colors.white, size: 28),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -82,7 +103,7 @@ class CustomSnackbar {
 
     overlayState.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: durationInSeconds), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }

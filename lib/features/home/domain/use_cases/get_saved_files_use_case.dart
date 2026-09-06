@@ -14,8 +14,13 @@ class GetSavedFilesUseCase extends UseCase<List<PdfFileEntity>> {
     final result = await homeRepo.getSavedFiles();
 
     return result.fold((failure) => Left(failure), (files) {
-      files.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      return Right(files);
+      try {
+        final sortedFiles = List<PdfFileEntity>.from(files);
+        sortedFiles.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        return Right(sortedFiles);
+      } catch (e) {
+        return Left(LocalDatabaseFailure('Failed to organize your files.'));
+      }
     });
   }
 }

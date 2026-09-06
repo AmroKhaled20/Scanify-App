@@ -12,11 +12,7 @@ class GenerateAndSavePdfUseCase extends UseCase<void, GeneratePdfParams> {
   @override
   Future<Either<Failure, void>> call(GeneratePdfParams param) async {
     if (param.images.isEmpty) {
-      return Left(ServerFailure('No images found to convert to PDF'));
-    }
-
-    if (param.pdfName.trim().isEmpty) {
-      return Left(ServerFailure('PDF file name is required'));
+      return Left(EmptyImagesFailure());
     }
 
     return await scannerRepo.generateAndSavePdf(
