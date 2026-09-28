@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scanify_pdf/features/home/presentation/views/home_view.dart';
 import 'package:scanify_pdf/features/scanner/presentation/manager/scanner%20cubit/scanner_cubit.dart';
+import 'package:scanify_pdf/features/scanner/presentation/views/gallery_handler_view.dart';
 import 'package:scanify_pdf/features/scanner/presentation/views/scanner_view.dart';
 import 'package:scanify_pdf/features/scanner/presentation/views/captured_images_view.dart';
 
@@ -10,6 +11,7 @@ abstract class AppRouter {
   static const kCameraView = '/cameraView';
   static const kFilesView = '/filesView';
   static const kCapturedImagesView = '/capturedImagesView';
+  static const kGalleryHandlerView = '/galleryHandlerView';
   static final router = GoRouter(
     initialLocation: kHomeView,
     routes: [
@@ -26,6 +28,10 @@ abstract class AppRouter {
             child: const CapturedImagesView(),
           );
         },
+      ),
+      GoRoute(
+        path: kGalleryHandlerView,
+        builder: (context, state) => const GalleryHandlerView(),
       ),
     ],
   );

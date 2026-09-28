@@ -20,7 +20,9 @@ class CustomRowButtons extends StatelessWidget {
           CustomButton(
             imagePath: 'assets/icons/pdf.png',
             label: 'Image to PDF',
-            onTap: () {},
+            onTap: () {
+              GoRouter.of(context).push(AppRouter.kGalleryHandlerView);
+            },
           ),
 
           BlocListener<CameraPermissionCubit, CameraPermissionState>(

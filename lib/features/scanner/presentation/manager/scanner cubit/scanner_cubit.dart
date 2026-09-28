@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:scanify_pdf/features/scanner/domain/entities/scanned_image_entity.dart';
 import 'package:scanify_pdf/features/scanner/domain/use_cases/clear_cached_images_use_case.dart';
 import 'package:scanify_pdf/features/scanner/domain/use_cases/generate_and_save_pdf_use_case.dart';
+import 'package:scanify_pdf/features/scanner/domain/use_cases/pick_images_from_gallery_use_case.dart';
 
 part 'scanner_state.dart';
 
@@ -10,6 +11,7 @@ class ScannerCubit extends Cubit<ScannerState> {
   // بنحقن الـ Use Cases
   final GenerateAndSavePdfUseCase generateAndSavePdfUseCase;
   final ClearCachedImagesUseCase clearCachedImagesUseCase;
+  final PickImagesFromGalleryUseCase pickImagesFromGalleryUseCase;
 
   // دي اللستة اللي هشيل فيها الصور واليوزر بيصور قبل ما يحولها
   List<ScannedImageEntity> capturedImages = [];
@@ -17,6 +19,7 @@ class ScannerCubit extends Cubit<ScannerState> {
   ScannerCubit({
     required this.generateAndSavePdfUseCase,
     required this.clearCachedImagesUseCase,
+    required this.pickImagesFromGalleryUseCase,
   }) : super(ScannerInitial());
 
   // 1. دالة إضافة صورة جديدة (لما الكاميرا تلقط صورة)
@@ -62,5 +65,23 @@ class ScannerCubit extends Cubit<ScannerState> {
     if (!isClosed) {
       emit(ScannerInitial());
     }
+  }
+
+  // 5. دالة استيراد الصور من الجاليري
+  Future<void> pickImagesFromGallery() async {
+    final result = await pickImagesFromGalleryUseCase.call();
+
+    result.fold(
+      (failure) =>
+          emit(ScannerPdfGenerationError(errorMessage: failure.message)),
+      (images) {
+        if (images.isNotEmpty) {
+          capturedImages.addAll(images);
+          emit(ScannerImagesUpdated(images: List.from(capturedImages)));
+        } else {
+          emit(ScannerImagesUpdated(images: []));
+        }
+      },
+    );
   }
 }

@@ -66,4 +66,27 @@ class ScannerRepoImpl implements ScannerRepo {
       return Left(UnknownFailure('Something went wrong. Try again.'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ScannedImageEntity>>>
+  pickImagesFromGallery() async {
+    try {
+      final imagePaths = await localDataSource.pickImagesFromGallery();
+
+      if (imagePaths.isEmpty) {
+        return const Right([]);
+      }
+
+      final List<ScannedImageEntity> images = imagePaths.map((path) {
+        return ScannedImageEntity(
+          id: DateTime.now().microsecondsSinceEpoch.toString(),
+          imagePath: path,
+        );
+      }).toList();
+
+      return Right(images);
+    } catch (e) {
+      return Left(UnknownFailure('Failed to load images from gallery.'));
+    }
+  }
 }

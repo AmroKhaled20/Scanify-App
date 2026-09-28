@@ -11,4 +11,6 @@ abstract class ScannerRepo {
   Future<Either<Failure, void>> clearCachedImages({
     required List<ScannedImageEntity> images,
   });
+
+  Future<Either<Failure, List<ScannedImageEntity>>> pickImagesFromGallery();
 }

@@ -13,6 +13,7 @@ import 'package:scanify_pdf/features/scanner/data/repos/scanner_repo_impl.dart';
 import 'package:scanify_pdf/features/scanner/domain/repos/scanner_repo.dart';
 import 'package:scanify_pdf/features/scanner/domain/use_cases/clear_cached_images_use_case.dart';
 import 'package:scanify_pdf/features/scanner/domain/use_cases/generate_and_save_pdf_use_case.dart';
+import 'package:scanify_pdf/features/scanner/domain/use_cases/pick_images_from_gallery_use_case.dart';
 
 final getIt = GetIt.instance;
 
@@ -31,13 +32,11 @@ void setupServiceLocator() {
 
   // 2. Repositories
   getIt.registerSingleton<HomeRepo>(
-    // بنستخدم getIt.get() عشان يستدعي الـ Data Source اللي لسه مسجلينه فوق
     HomeRepoImpl(homeLocalDataSource: getIt.get<HomeLocalDataSource>()),
   );
 
   // 3. Use Cases
   getIt.registerSingleton<GetSavedFilesUseCase>(
-    // بنستخدم getIt.get() عشان يستدعي الـ Repo اللي لسه مسجلينه
     GetSavedFilesUseCase(homeRepo: getIt.get<HomeRepo>()),
   );
 
@@ -60,5 +59,9 @@ void setupServiceLocator() {
 
   getIt.registerSingleton<ClearCachedImagesUseCase>(
     ClearCachedImagesUseCase(scannerRepo: getIt.get<ScannerRepo>()),
+  );
+
+  getIt.registerSingleton<PickImagesFromGalleryUseCase>(
+    PickImagesFromGalleryUseCase(scannerRepo: getIt.get<ScannerRepo>()),
   );
 }

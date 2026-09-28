@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,20 +12,35 @@ class PdfGeneratorUtil {
   }) async {
     final pdf = pw.Document();
 
+    const pageWidth = 595.28;
+
     for (final path in imagePaths) {
       final imageBytes = await File(path).readAsBytes();
-      final pdfImage = pw.MemoryImage(imageBytes);
 
-      final imageWidth = pdfImage.width?.toDouble() ?? 595.0;
-      final imageHeight = pdfImage.height?.toDouble() ?? 842.0;
+      final decodedImage = await ui.instantiateImageCodec(imageBytes);
+      final frame = await decodedImage.getNextFrame();
+
+      final imageWidth = frame.image.width.toDouble();
+      final imageHeight = frame.image.height.toDouble();
+
+      final pageHeight = pageWidth * (imageHeight / imageWidth);
+
+      final pdfImage = pw.MemoryImage(imageBytes);
 
       pdf.addPage(
         pw.Page(
-          pageFormat: PdfPageFormat(imageWidth, imageHeight),
+          pageFormat: PdfPageFormat(pageWidth, pageHeight, marginAll: 0),
           margin: pw.EdgeInsets.zero,
           build: (context) {
-            return pw.SizedBox.expand(
-              child: pw.Image(pdfImage, fit: pw.BoxFit.fill),
+            return pw.SizedBox(
+              width: pageWidth,
+              height: pageHeight,
+              child: pw.Image(
+                pdfImage,
+                width: pageWidth,
+                height: pageHeight,
+                fit: pw.BoxFit.fill,
+              ),
             );
           },
         ),
@@ -39,6 +55,7 @@ class PdfGeneratorUtil {
     }
 
     final filePath = await _getUniqueFilePath(appPdfDir.path, pdfName);
+
     final file = File(filePath);
     await file.writeAsBytes(await pdf.save());
 
@@ -46,6 +63,7 @@ class PdfGeneratorUtil {
 
     final thumbnailFile = File(imagePaths.first);
     final savedThumbnailPath = '${appPdfDir.path}/$finalPdfName-thumb.jpg';
+
     await thumbnailFile.copy(savedThumbnailPath);
 
     final fileSizeInBytes = await file.length();
