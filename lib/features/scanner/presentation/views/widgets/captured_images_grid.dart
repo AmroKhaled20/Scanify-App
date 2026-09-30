@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scanify_pdf/core/utils/app_router.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
+import 'package:scanify_pdf/core/utils/constants.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
 import 'package:scanify_pdf/features/scanner/presentation/manager/scanner%20cubit/scanner_cubit.dart';
@@ -36,30 +38,30 @@ class CapturedImagesGrid extends StatelessWidget {
             mainAxisSpacing: AppSpacing.s16,
             childAspectRatio: 0.75,
           ),
-          itemCount: images.length + 1,
+          itemCount: images.length + 2,
           itemBuilder: (context, index) {
             if (index == images.length) {
-              return GestureDetector(
+              return _buildAddButton(
+                context: context,
+                icon: Icons.photo_library_rounded,
+                title: 'Gallery',
                 onTap: () {
                   context.read<ScannerCubit>().pickImagesFromGallery();
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF2A2D3E),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add, color: Colors.white, size: 40),
-                      const SizedBox(height: AppSpacing.s8),
-                      Text(
-                        'Add Images',
-                        style: Styles.textStyle16.copyWith(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
+              );
+            }
+
+            if (index == images.length + 1) {
+              return _buildAddButton(
+                context: context,
+                icon: Icons.camera_alt_rounded,
+                title: 'Camera',
+                onTap: () {
+                  GoRouter.of(context).replace(
+                    AppRouter.kAddMoreCameraView,
+                    extra: context.read<ScannerCubit>(),
+                  );
+                },
               );
             }
 
@@ -120,6 +122,45 @@ class CapturedImagesGrid extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Widget _buildAddButton({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF202334),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: primaryColor.withOpacity(0.5), width: 1.5),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: primaryColor.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: primaryColor, size: 28),
+            ),
+            const SizedBox(height: AppSpacing.s16),
+            Text(
+              title,
+              style: Styles.textStyle16.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

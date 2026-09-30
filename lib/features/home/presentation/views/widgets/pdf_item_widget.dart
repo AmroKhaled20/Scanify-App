@@ -31,7 +31,10 @@ class PdfItemWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     image: pdfFile.thumbnailPath != null
                         ? DecorationImage(
-                            image: FileImage(File(pdfFile.thumbnailPath!)),
+                            image: ResizeImage(
+                              FileImage(File(pdfFile.thumbnailPath!)),
+                              width: 200,
+                            ),
                             fit: BoxFit.cover,
                           )
                         : null,

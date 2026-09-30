@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scanify_pdf/core/utils/app_router.dart';
-import 'package:scanify_pdf/features/scanner/presentation/manager/scanner cubit/scanner_cubit.dart';
+import 'package:scanify_pdf/features/scanner/presentation/manager/scanner%20cubit/scanner_cubit.dart';
 
 class ScannerControlsWidget extends StatelessWidget {
   final CameraController cameraController;
@@ -54,7 +54,10 @@ class ScannerControlsWidget extends StatelessWidget {
                       border: Border.all(color: Colors.white24),
                       image: lastImagePath != null
                           ? DecorationImage(
-                              image: FileImage(File(lastImagePath)),
+                              image: ResizeImage(
+                                FileImage(File(lastImagePath)),
+                                width: 150,
+                              ),
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
                                 Colors.black.withOpacity(0.5),

@@ -57,7 +57,9 @@ class _ScannerViewBodyState extends State<ScannerViewBody> {
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    _cameraController?.dispose().catchError((error) {
+      debugPrint('Ignored Camera Dispose Error: $error');
+    });
     super.dispose();
   }
 
