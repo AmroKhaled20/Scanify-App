@@ -36,12 +36,36 @@ class CapturedImagesGrid extends StatelessWidget {
             mainAxisSpacing: AppSpacing.s16,
             childAspectRatio: 0.75,
           ),
-          itemCount: images.length,
+          itemCount: images.length + 1,
           itemBuilder: (context, index) {
+            if (index == images.length) {
+              return GestureDetector(
+                onTap: () {
+                  context.read<ScannerCubit>().pickImagesFromGallery();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF2A2D3E),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.add, color: Colors.white, size: 40),
+                      const SizedBox(height: AppSpacing.s8),
+                      Text(
+                        'Add Images',
+                        style: Styles.textStyle16.copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
             return Stack(
               fit: StackFit.expand,
               children: [
-                // الصورة
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
@@ -61,7 +85,6 @@ class CapturedImagesGrid extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Positioned(
                   top: AppSpacing.s8,
                   right: AppSpacing.s8,
