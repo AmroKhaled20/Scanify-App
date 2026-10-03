@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
-import 'package:scanify_pdf/features/home/presentation/manager/home cubit/home_cubit.dart';
+import 'package:scanify_pdf/features/home/presentation/manager/home%20cubit/home_cubit.dart';
 import 'package:scanify_pdf/features/home/presentation/views/pdf_viewer_view.dart';
 import 'package:scanify_pdf/features/home/presentation/views/widgets/pdf_item_widget.dart';
 
@@ -49,10 +49,18 @@ class LowerSection extends StatelessWidget {
                     );
                   } else if (state is HomeSuccess) {
                     if (state.files.isEmpty) {
-                      return const Center(
+                      final hasFiles = context
+                          .read<HomeCubit>()
+                          .allFiles
+                          .isNotEmpty;
+
+                      return Center(
                         child: Text(
-                          'No Files Added Yet',
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                          hasFiles ? 'File Not found' : 'No Files Added Yet',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
                         ),
                       );
                     }

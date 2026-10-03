@@ -7,6 +7,10 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final GetSavedFilesUseCase getSavedFilesUseCase;
 
+  List<PdfFileEntity> allFiles = [];
+
+  List<PdfFileEntity> filteredFiles = [];
+
   HomeCubit(this.getSavedFilesUseCase) : super(HomeInitial());
 
   Future<void> fetchSavedFiles() async {
@@ -14,9 +18,22 @@ class HomeCubit extends Cubit<HomeState> {
 
     final result = await getSavedFilesUseCase.call();
 
-    result.fold(
-      (failure) => emit(HomeFailure(failure.message)),
-      (files) => emit(HomeSuccess(files)),
-    );
+    result.fold((failure) => emit(HomeFailure(failure.message)), (files) {
+      allFiles = files;
+      filteredFiles = files;
+      emit(HomeSuccess(filteredFiles));
+    });
+  }
+
+  void searchFiles(String query) {
+    if (query.isEmpty) {
+      filteredFiles = List.from(allFiles);
+    } else {
+      filteredFiles = allFiles.where((file) {
+        return file.name.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    }
+
+    emit(HomeSuccess(filteredFiles));
   }
 }
