@@ -5,6 +5,7 @@ import 'package:scanify_pdf/core/services/permission_service.dart';
 import 'package:scanify_pdf/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:scanify_pdf/features/home/data/repos/home_repo_impl.dart';
 import 'package:scanify_pdf/features/home/domain/repos/home_repo.dart';
+import 'package:scanify_pdf/features/home/domain/use_cases/delete_saved_file_use_case.dart';
 import 'package:scanify_pdf/features/home/domain/use_cases/get_saved_files_use_case.dart';
 
 // Imports للـ Scanner Feature
@@ -38,6 +39,10 @@ void setupServiceLocator() {
   // 3. Use Cases
   getIt.registerSingleton<GetSavedFilesUseCase>(
     GetSavedFilesUseCase(homeRepo: getIt.get<HomeRepo>()),
+  );
+
+  getIt.registerLazySingleton<DeleteSavedFileUseCase>(
+    () => DeleteSavedFileUseCase(homeRepo: getIt.get<HomeRepo>()),
   );
 
   // ==========================================

@@ -4,4 +4,5 @@ import 'package:scanify_pdf/core/errors/failure.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, List<PdfFileEntity>>> getSavedFiles();
+  Future<Either<Failure, void>> deleteFile(PdfFileEntity file);
 }

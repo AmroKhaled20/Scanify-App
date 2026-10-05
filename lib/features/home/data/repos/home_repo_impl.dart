@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:scanify_pdf/core/entities/pdf_file_entity.dart';
 import 'package:scanify_pdf/core/errors/failure.dart';
@@ -16,6 +18,18 @@ class HomeRepoImpl implements HomeRepo {
       return Right(files);
     } catch (e) {
       return Left(LocalDatabaseFailure('Failed to load your saved files.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteFile(PdfFileEntity file) async {
+    try {
+      await homeLocalDataSource.deleteFile(file);
+      return right(null);
+    } on FileSystemException {
+      return left(FileSystemFailure('Failed to delete the file from storage.'));
+    } catch (e) {
+      return left(LocalDatabaseFailure('Failed to delete the saved file.'));
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:scanify_pdf/core/entities/pdf_file_entity.dart';
 import 'package:scanify_pdf/core/utils/app_spacing.dart';
 import 'package:scanify_pdf/core/utils/size_extensions.dart';
 import 'package:scanify_pdf/core/utils/styles.dart';
+import 'package:scanify_pdf/features/home/presentation/views/widgets/file_options_bottom_sheet.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PdfItemWidget extends StatelessWidget {
@@ -138,7 +139,9 @@ class PdfItemWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.s24),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showFileOptionsBottomSheet(context, pdfFile);
+                      },
                       icon: const Icon(
                         Icons.more_vert,
                         color: Colors.grey,
